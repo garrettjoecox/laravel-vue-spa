@@ -6,12 +6,12 @@
                     <div class="card-header">Register</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/register">
+                        <form v-on:submit.prevent="onSubmit">
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" class="form-control" v-model="name" name="name" required autocomplete="name" autofocus>
                                     <span class="invalid-feedback" role="alert">
                                         <strong>Error</strong>
                                     </span>
@@ -22,7 +22,7 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" required autocomplete="email">
+                                    <input id="email" type="email" class="form-control" v-model="email" name="email" required autocomplete="email">
                                     <span class="invalid-feedback" role="alert">
                                         <strong>Error</strong>
                                     </span>
@@ -33,7 +33,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control" v-model="password" name="password" required autocomplete="new-password">
                                     <span class="invalid-feedback" role="alert">
                                         <strong>Error</strong>
                                     </span>
@@ -44,7 +44,7 @@
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control" v-model="password_confirmation" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
 
@@ -62,3 +62,35 @@
         </div>
     </div>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+    data() {
+        return {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+        };
+    },
+
+    computed: {
+        ...mapState('auth/register', {
+            errors: state => state.errors
+        }),
+    },
+
+    methods: {
+        async onSubmit() {
+            await this.$store.dispatch('auth/register/sendRequest', {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation,
+            });
+        }
+    },
+}
+</script>

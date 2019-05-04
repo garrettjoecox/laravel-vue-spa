@@ -1,3 +1,6 @@
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
 import NotFound from './views/NotFound';
 import Welcome from './views/Welcome';
 import Home from './views/Home';
@@ -5,7 +8,9 @@ import Register from './views/auth/Register';
 import Login from './views/auth/Login';
 import PasswordEmail from './views/auth/passwords/Email';
 
-export default {
+Vue.use(VueRouter);
+
+export default new VueRouter({
     mode: 'history',
 
     linkActiveClass: 'font-bold',
@@ -41,4 +46,4 @@ export default {
             component: PasswordEmail
         },
     ]
-};
+});

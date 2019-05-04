@@ -6,13 +6,13 @@
                     <div class="card-header">Login</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/login">
+                        <form v-on:submit.prevent="onSubmit">
 
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus>
+                                    <input id="email" type="email" class="form-control" name="email" v-model="email" required autocomplete="email" autofocus>
                                     <span class="invalid-feedback" role="alert">
                                         <strong>Error</strong>
                                     </span>
@@ -23,7 +23,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete="current-password">
 
                                     <span class="invalid-feedback" role="alert">
                                         <strong>Error</strong>
@@ -49,9 +49,9 @@
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link" href="/password/reset">
+                                    <router-link class="btn btn-link" to="/password/reset">
                                         Forgot Your Password?
-                                    </a>
+                                    </router-link>
                                 </div>
                             </div>
                         </form>
@@ -61,3 +61,31 @@
         </div>
     </div>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+    data() {
+        return {
+            email: '',
+            password: '',
+        };
+    },
+
+    computed: {
+        ...mapState('auth/login', {
+            errors: state => state.errors
+        }),
+    },
+
+    methods: {
+        async onSubmit() {
+            await this.$store.dispatch('auth/login/sendRequest', {
+                email: this.email,
+                password: this.password,
+            });
+        }
+    },
+}
+</script>
