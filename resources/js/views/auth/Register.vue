@@ -11,9 +11,9 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" v-model="name" name="name" required autocomplete="name" autofocus>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Error</strong>
+                                    <input id="name" type="text" class="form-control"  :class="{ 'is-invalid': errors.name }" v-model="name" name="name" required autocomplete="name" autofocus>
+                                    <span class="invalid-feedback" role="alert" v-if="errors.name">
+                                        <strong>{{errors.name[0]}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -22,9 +22,9 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" v-model="email" name="email" required autocomplete="email">
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Error</strong>
+                                    <input id="email" type="email" class="form-control"  :class="{ 'is-invalid': errors.email }" v-model="email" name="email" required autocomplete="email">
+                                    <span class="invalid-feedback" role="alert" v-if="errors.email">
+                                        <strong>{{errors.email[0]}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -33,9 +33,9 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" v-model="password" name="password" required autocomplete="new-password">
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Error</strong>
+                                    <input id="password" type="password" class="form-control"  :class="{ 'is-invalid': errors.password }" v-model="password" name="password" required autocomplete="new-password">
+                                    <span class="invalid-feedback" role="alert" v-if="errors.password">
+                                        <strong>{{errors.password[0]}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" v-model="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control"  :class="{ 'is-invalid': errors.password_confirmation }" v-model="password_confirmation" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
 
@@ -69,10 +69,10 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: '',
+            name: 'Garrett',
+            email: 'garrettjcox@gmail.com',
+            password: 'password',
+            password_confirmation: 'password',
         };
     },
 
@@ -90,6 +90,8 @@ export default {
                 password: this.password,
                 password_confirmation: this.password_confirmation,
             });
+
+            this.$router.push('/home');
         }
     },
 }

@@ -12,9 +12,9 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" v-model="email" required autocomplete="email" autofocus>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Error</strong>
+                                    <input id="email" type="email" class="form-control" :class="{ 'is-invalid': errors.email }" name="email" v-model="email" required autocomplete="email" autofocus>
+                                    <span class="invalid-feedback" role="alert" v-if="errors.email">
+                                        <strong>{{errors.email[0]}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -23,10 +23,10 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete="current-password">
+                                    <input id="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" name="password" v-model="password" required autocomplete="current-password">
 
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Error</strong>
+                                    <span class="invalid-feedback" role="alert" v-if="errors.password">
+                                        <strong>{{errors.password[0]}}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -68,8 +68,8 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            email: 'garrettjcox@gmail.com',
+            password: 'password',
         };
     },
 
@@ -85,6 +85,8 @@ export default {
                 email: this.email,
                 password: this.password,
             });
+
+            this.$router.push('/home');
         }
     },
 }

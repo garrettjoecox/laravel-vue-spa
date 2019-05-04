@@ -37,11 +37,11 @@ export default {
             commit('setRequestState', STATE_IN_PROGRESS);
 
             try {
-                const response = await axios.post('/api/register', formData);
+                const response = await axios.post('/api/logout', formData);
 
                 commit('setRequestState', STATE_SUCCESS);
                 commit('setData', response.data);
-                commit('auth/setUser', response.data, { root: true });
+                commit('auth/clearUser', null, { root: true });
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
                 commit('setErrors', error.response.data.errors);

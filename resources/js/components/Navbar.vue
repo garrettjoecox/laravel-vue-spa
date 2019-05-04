@@ -9,13 +9,13 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto" v-if="user">
+                <ul class="navbar-nav ml-auto" v-if="isAuth">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/home">Home</router-link>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span>{{ user.name }}</span>
+                            <span>{{ user && user.name }}</span>
                             <span class="caret"></span>
                         </a>
 
@@ -40,17 +40,22 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                user: null
-            }
-        },
+import { mapState } from 'vuex';
 
-        methods: {
-            logout() {
+export default {
+    computed: {
+        ...mapState('auth', {
+            isAuth: state => state.isAuth,
+            user: state => state.user,
+        }),
+    },
 
-            }
+    methods: {
+        async logout() {
+            await this.$store.dispatch('auth/logout/sendRequest');
+
+            this.$router.push('/login');
         }
     }
+}
 </script>

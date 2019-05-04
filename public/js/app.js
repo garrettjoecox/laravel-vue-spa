@@ -1775,6 +1775,19 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1816,14 +1829,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      user: null
-    };
-  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth', {
+    isAuth: function isAuth(state) {
+      return state.isAuth;
+    },
+    user: function user(state) {
+      return state.user;
+    }
+  })),
   methods: {
-    logout: function logout() {}
+    logout: function () {
+      var _logout = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.$store.dispatch('auth/logout/sendRequest');
+
+              case 2:
+                this.$router.push('/login');
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function logout() {
+        return _logout.apply(this, arguments);
+      }
+
+      return logout;
+    }()
   }
 });
 
@@ -1919,8 +1963,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      email: '',
-      password: ''
+      email: 'garrettjcox@gmail.com',
+      password: 'password'
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth/login', {
@@ -1944,6 +1988,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 2:
+                this.$router.push('/home');
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2053,10 +2100,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
+      name: 'Garrett',
+      email: 'garrettjcox@gmail.com',
+      password: 'password',
+      password_confirmation: 'password'
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth/register', {
@@ -2082,6 +2129,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 2:
+                this.$router.push('/home');
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -38804,7 +38854,7 @@ var render = function() {
               attrs: { id: "navbarSupportedContent" }
             },
             [
-              _vm.user
+              _vm.isAuth
                 ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
                     _c(
                       "li",
@@ -38834,7 +38884,9 @@ var render = function() {
                           }
                         },
                         [
-                          _c("span", [_vm._v(_vm._s(_vm.user.name))]),
+                          _c("span", [
+                            _vm._v(_vm._s(_vm.user && _vm.user.name))
+                          ]),
                           _vm._v(" "),
                           _c("span", { staticClass: "caret" })
                         ]
@@ -39160,6 +39212,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.email },
                       attrs: {
                         id: "email",
                         type: "email",
@@ -39179,7 +39232,16 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _vm.errors.email
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.errors.email[0]))])]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39204,6 +39266,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.password },
                       attrs: {
                         id: "password",
                         type: "password",
@@ -39222,11 +39285,24 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _vm.errors.password
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.errors.password[0]))
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row mb-0" }, [
                   _c(
@@ -39271,26 +39347,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("Error")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("Error")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39377,6 +39433,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.name },
                       attrs: {
                         id: "name",
                         type: "text",
@@ -39396,7 +39453,16 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _vm.errors.name
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.errors.name[0]))])]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39421,6 +39487,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.email },
                       attrs: {
                         id: "email",
                         type: "email",
@@ -39439,7 +39506,16 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _vm.errors.email
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.errors.email[0]))])]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39464,6 +39540,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.password },
                       attrs: {
                         id: "password",
                         type: "password",
@@ -39482,7 +39559,20 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm.errors.password
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.errors.password[0]))
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -39507,6 +39597,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
+                      class: { "is-invalid": _vm.errors.password_confirmation },
                       attrs: {
                         id: "password-confirm",
                         type: "password",
@@ -39527,7 +39618,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(0)
               ]
             )
           ])
@@ -39537,36 +39628,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("Error")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("Error")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-      [_c("strong", [_vm._v("Error")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -55542,8 +55603,8 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_3__);
 
@@ -55558,8 +55619,8 @@ files.keys().map(function (key) {
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  router: _router__WEBPACK_IMPORTED_MODULE_1__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_2__["default"]
+  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],
+  router: _router__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
 /***/ }),
@@ -55788,13 +55849,34 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./register */ "./resources/js/store/auth/register.js");
 /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login */ "./resources/js/store/auth/login.js");
+/* harmony import */ var _logout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logout */ "./resources/js/store/auth/logout.js");
 
 
+
+var isAuth = !!document.head.querySelector('meta[name="is-auth"]');
+var localStorageUser = localStorage.getItem('user');
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   modules: {
     register: _register__WEBPACK_IMPORTED_MODULE_0__["default"],
-    login: _login__WEBPACK_IMPORTED_MODULE_1__["default"]
+    login: _login__WEBPACK_IMPORTED_MODULE_1__["default"],
+    logout: _logout__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  state: {
+    isAuth: isAuth,
+    user: isAuth && localStorageUser && JSON.parse(localStorageUser)
+  },
+  mutations: {
+    setUser: function setUser(state, user) {
+      state.isAuth = true;
+      state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
+    },
+    clearUser: function clearUser(state) {
+      state.isAuth = false;
+      state.user = null;
+      localStorage.removeItem('user');
+    }
   }
 });
 
@@ -55866,21 +55948,121 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]);
                 commit('setData', response.data);
-                _context.next = 15;
+                commit('auth/setUser', response.data, {
+                  root: true
+                });
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_FAIL"]);
                 commit('setErrors', _context.t0.response.data.errors);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 11]]);
+        }, _callee, null, [[3, 12]]);
+      }));
+
+      function sendRequest(_x, _x2) {
+        return _sendRequest.apply(this, arguments);
+      }
+
+      return sendRequest;
+    }()
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/auth/logout.js":
+/*!*******************************************!*\
+  !*** ./resources/js/store/auth/logout.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _requestStates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../requestStates */ "./resources/js/store/requestStates.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    requestState: _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_PRE"],
+    data: null,
+    errors: {}
+  },
+  mutations: {
+    setRequestState: function setRequestState(state, requestState) {
+      state.requestState = requestState;
+    },
+    setData: function setData(state, data) {
+      state.data = data;
+    },
+    setErrors: function setErrors(state, errors) {
+      state.errors = errors;
+    },
+    reset: function reset(state) {
+      state.requestState = _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_PRE"];
+      state.data = null;
+      state.errors = {};
+    }
+  },
+  actions: {
+    sendRequest: function () {
+      var _sendRequest = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref, formData) {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                commit('reset');
+                commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_IN_PROGRESS"]);
+                _context.prev = 3;
+                _context.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/logout', formData);
+
+              case 6:
+                response = _context.sent;
+                commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]);
+                commit('setData', response.data);
+                commit('auth/clearUser', null, {
+                  root: true
+                });
+                _context.next = 16;
+                break;
+
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](3);
+                commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_FAIL"]);
+                commit('setErrors', _context.t0.response.data.errors);
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[3, 12]]);
       }));
 
       function sendRequest(_x, _x2) {
@@ -55960,21 +56142,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]);
                 commit('setData', response.data);
-                _context.next = 15;
+                commit('auth/setUser', response.data, {
+                  root: true
+                });
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_FAIL"]);
                 commit('setErrors', _context.t0.response.data.errors);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 11]]);
+        }, _callee, null, [[3, 12]]);
       }));
 
       function sendRequest(_x, _x2) {

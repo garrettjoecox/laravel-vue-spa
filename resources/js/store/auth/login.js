@@ -41,6 +41,7 @@ export default {
 
                 commit('setRequestState', STATE_SUCCESS);
                 commit('setData', response.data);
+                commit('auth/setUser', response.data, { root: true });
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
                 commit('setErrors', error.response.data.errors);
