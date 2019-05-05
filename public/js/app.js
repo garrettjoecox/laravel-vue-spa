@@ -57216,7 +57216,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _requestStates__WEBPACK_IMPORTED_MODULE_4__["STATE_FAIL"]);
                 commit('setErrors', _context.t0.response.data.errors);
-                commit('auth/clearUser');
+                commit('auth/clearUser', null, {
+                  root: true
+                });
 
               case 17:
               case "end":
