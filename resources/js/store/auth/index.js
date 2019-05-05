@@ -2,9 +2,9 @@ import register from './register';
 import login from './login';
 import logout from './logout';
 import passwords from './passwords';
+import refreshUser from './refreshUser';
 
 const isAuth = !!document.head.querySelector('meta[name="is-auth"]');
-const localStorageUser = localStorage.getItem('user');
 
 export default {
     namespaced: true,
@@ -13,27 +13,24 @@ export default {
         register,
         login,
         logout,
-        passwords
+        passwords,
+        refreshUser,
     },
 
     state: {
         isAuth: isAuth,
-        user: isAuth && localStorageUser && JSON.parse(localStorageUser),
+        user: null,
     },
 
     mutations: {
         setUser(state, user) {
             state.isAuth = true;
             state.user = user;
-
-            localStorage.setItem('user', JSON.stringify(user));
         },
 
         clearUser(state) {
             state.isAuth = false;
             state.user = null;
-
-            localStorage.removeItem('user');
         }
     },
 }
