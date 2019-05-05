@@ -66,6 +66,8 @@
 <script>
 import { mapState } from 'vuex'
 
+import { STATE_SUCCESS } from '../../store/requestStates';
+
 export default {
     data() {
         return {
@@ -78,7 +80,8 @@ export default {
 
     computed: {
         ...mapState('auth/register', {
-            errors: state => state.errors
+            requestState: state => state.requestState,
+            errors: state => state.errors,
         }),
     },
 
@@ -91,8 +94,18 @@ export default {
                 password_confirmation: this.password_confirmation,
             });
 
-            this.$router.push('/home');
+            if (this.requestState === STATE_SUCCESS) {
+                this.$store.dispatch('alert/addTimedAlert', {
+                    type: 'primary',
+                    message: 'Account created successfully',
+                });
+                this.$router.push('/home');
+            }
         }
     },
+
+    created() {
+        this.$store.commit('auth/register/reset');
+    }
 }
 </script>

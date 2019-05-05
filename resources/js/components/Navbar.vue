@@ -41,6 +41,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { STATE_SUCCESS } from '../store/requestStates';
 
 export default {
     computed: {
@@ -54,8 +55,14 @@ export default {
         async logout() {
             await this.$store.dispatch('auth/logout/sendRequest');
 
-            this.$router.push('/login');
-        }
+            if (this.$store.state.auth.logout.requestState === STATE_SUCCESS) {
+                this.$store.dispatch('alert/addTimedAlert', {
+                    type: 'primary',
+                    message: 'Logged out successfully',
+                });
+                this.$router.push('/login');
+            }
+        },
     }
 }
 </script>

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { defaultsDeep } from 'lodash';
 
-import requestStore from '../requestStore';
-import { STATE_IN_PROGRESS, STATE_SUCCESS, STATE_FAIL } from '../requestStates';
+import requestStore from '../../requestStore';
+import { STATE_IN_PROGRESS, STATE_SUCCESS, STATE_FAIL } from '../../requestStates';
 
 export default defaultsDeep({
     actions: {
@@ -11,11 +11,10 @@ export default defaultsDeep({
             commit('setRequestState', STATE_IN_PROGRESS);
 
             try {
-                const response = await axios.post('/api/login', formData);
+                const response = await axios.post('/api/password/email', formData);
 
                 commit('setRequestState', STATE_SUCCESS);
                 commit('setData', response.data);
-                commit('auth/setUser', response.data, { root: true });
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
                 commit('setErrors', error.response.data.errors);

@@ -49,7 +49,7 @@
                                         Login
                                     </button>
 
-                                    <router-link class="btn btn-link" to="/password/reset">
+                                    <router-link class="btn btn-link" to="/password/email">
                                         Forgot Your Password?
                                     </router-link>
                                 </div>
@@ -65,6 +65,8 @@
 <script>
 import { mapState } from 'vuex'
 
+import { STATE_SUCCESS } from '../../store/requestStates';
+
 export default {
     data() {
         return {
@@ -75,7 +77,8 @@ export default {
 
     computed: {
         ...mapState('auth/login', {
-            errors: state => state.errors
+            requestState: state => state.requestState,
+            errors: state => state.errors,
         }),
     },
 
@@ -86,8 +89,14 @@ export default {
                 password: this.password,
             });
 
-            this.$router.push('/home');
+            if (this.requestState === STATE_SUCCESS) {
+                this.$router.push('/home');
+            }
         }
     },
+
+    created() {
+        this.$store.commit('auth/login/reset');
+    }
 }
 </script>

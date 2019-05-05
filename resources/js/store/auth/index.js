@@ -1,6 +1,7 @@
 import register from './register';
 import login from './login';
 import logout from './logout';
+import passwords from './passwords';
 
 const isAuth = !!document.head.querySelector('meta[name="is-auth"]');
 const localStorageUser = localStorage.getItem('user');
@@ -12,6 +13,7 @@ export default {
         register,
         login,
         logout,
+        passwords
     },
 
     state: {

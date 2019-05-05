@@ -1,36 +1,10 @@
 import axios from 'axios';
+import { defaultsDeep } from 'lodash';
 
-import { STATE_PRE, STATE_IN_PROGRESS, STATE_SUCCESS, STATE_FAIL } from '../requestStates';
+import requestStore from '../requestStore';
+import { STATE_IN_PROGRESS, STATE_SUCCESS, STATE_FAIL } from '../requestStates';
 
-export default {
-    namespaced: true,
-
-    state: {
-        requestState: STATE_PRE,
-        data: null,
-        errors: {},
-    },
-
-    mutations: {
-        setRequestState(state, requestState) {
-            state.requestState = requestState;
-        },
-
-        setData(state, data) {
-            state.data = data;
-        },
-
-        setErrors(state, errors) {
-            state.errors = errors;
-        },
-
-        reset(state) {
-            state.requestState = STATE_PRE;
-            state.data = null;
-            state.errors = {};
-        },
-    },
-
+export default defaultsDeep({
     actions: {
         async sendRequest({ commit }, formData) {
             commit('reset');
@@ -48,4 +22,4 @@ export default {
             }
         },
     }
-}
+}, requestStore);

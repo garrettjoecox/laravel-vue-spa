@@ -12,6 +12,7 @@
     <div id="app" class="d-flex flex-column">
         <navbar></navbar>
         <router-view></router-view>
+        <alert></alert>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
