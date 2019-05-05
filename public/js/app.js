@@ -56598,13 +56598,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _views_NotFound__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/NotFound */ "./resources/js/views/NotFound.vue");
-/* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _views_auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/auth/Register */ "./resources/js/views/auth/Register.vue");
-/* harmony import */ var _views_auth_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/auth/Login */ "./resources/js/views/auth/Login.vue");
-/* harmony import */ var _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/auth/passwords/Email */ "./resources/js/views/auth/passwords/Email.vue");
-/* harmony import */ var _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/auth/passwords/Reset */ "./resources/js/views/auth/passwords/Reset.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _views_NotFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/NotFound */ "./resources/js/views/NotFound.vue");
+/* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var _views_auth_Register__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/auth/Register */ "./resources/js/views/auth/Register.vue");
+/* harmony import */ var _views_auth_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/auth/Login */ "./resources/js/views/auth/Login.vue");
+/* harmony import */ var _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/auth/passwords/Email */ "./resources/js/views/auth/passwords/Email.vue");
+/* harmony import */ var _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/auth/passwords/Reset */ "./resources/js/views/auth/passwords/Reset.vue");
+
 
 
 
@@ -56615,32 +56617,76 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   linkActiveClass: 'font-bold',
   routes: [{
     path: '*',
-    component: _views_NotFound__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _views_NotFound__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/',
-    component: _views_Welcome__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _views_Welcome__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_5__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/register',
-    component: _views_auth_Register__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _views_auth_Register__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      guest: true
+    }
   }, {
     path: '/login',
-    component: _views_auth_Login__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _views_auth_Login__WEBPACK_IMPORTED_MODULE_7__["default"],
+    meta: {
+      guest: true
+    }
   }, {
     path: '/password/email',
-    component: _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_8__["default"],
+    meta: {
+      guest: true
+    }
   }, {
     path: '/password/reset/:token',
-    component: _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_9__["default"],
+    meta: {
+      guest: true
+    }
   }]
-}));
+});
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    if (!_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.isAuth) {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(function (record) {
+    return record.meta.guest;
+  })) {
+    if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.isAuth) {
+      next({
+        path: '/home'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
