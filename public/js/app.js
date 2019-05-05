@@ -2070,7 +2070,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 2:
                 if (this.requestState === _store_requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]) {
-                  this.$router.push('/home');
+                  this.$router.push(this.$route.query.redirect || '/home');
                 }
 
               case 3:

@@ -90,7 +90,7 @@ export default {
             });
 
             if (this.requestState === STATE_SUCCESS) {
-                this.$router.push('/home');
+                this.$router.push(this.$route.query.redirect || '/home');
             }
         }
     },
