@@ -7,7 +7,7 @@
                 @keydown="clearValidationError($event.target.name)"
                 class="col-md-8 col-lg-6 pb-5"
             >
-                <h1 class="text-center">Welcome Back.</h1>
+                <h1 class="text-center">Welcome Back,</h1>
                 <h5 class="mb-5 text-center text-muted">Log into your account here:</h5>
 
                 <div class="form-group">
@@ -87,12 +87,7 @@ import {
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
 import { STATE_SUCCESS } from '../../constants/requestStates';
-
-function inputState(field, form) {
-    if (!form) form = this.$v.form;
-
-    return form[field].$dirty ? !form[field].$error : null
-}
+import { inputState } from '../../utils/formUtils';
 
 export default {
     data() {
