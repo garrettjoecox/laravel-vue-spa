@@ -21821,7 +21821,7 @@ var VBTooltip = {
 /*!*************************************************!*\
   !*** ./node_modules/bootstrap-vue/esm/index.js ***!
   \*************************************************/
-/*! exports provided: BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default, componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip */
+/*! exports provided: componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip, BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -71457,7 +71457,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71518,7 +71518,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -71537,7 +71537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71598,7 +71598,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -71617,7 +71617,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71675,7 +71675,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -71717,7 +71717,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71775,7 +71775,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -71794,7 +71794,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71858,7 +71858,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -71877,7 +71877,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _requestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../requestStore */ "./resources/js/store/requestStore.js");
+/* harmony import */ var _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../baseRequestStore */ "./resources/js/store/baseRequestStore.js");
 /* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
@@ -71938,43 +71938,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sendRequest;
     }()
   }
-}, _requestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, _baseRequestStore__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
-/***/ "./resources/js/store/index.js":
-/*!*************************************!*\
-  !*** ./resources/js/store/index.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth/index.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/store/alert.js");
-
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  modules: {
-    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
-    alert: _alert__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
-  strict: true
-}));
-
-/***/ }),
-
-/***/ "./resources/js/store/requestStore.js":
-/*!********************************************!*\
-  !*** ./resources/js/store/requestStore.js ***!
-  \********************************************/
+/***/ "./resources/js/store/baseRequestStore.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/baseRequestStore.js ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -72011,6 +71982,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/store/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/index.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth/index.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/store/alert.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
+    alert: _alert__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  strict: true
+}));
 
 /***/ }),
 

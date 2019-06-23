@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { defaultsDeep } from 'lodash';
 
-import requestStore from '../../requestStore';
+import baseRequestStore from '../../baseRequestStore';
 import { STATE_IN_PROGRESS, STATE_SUCCESS, STATE_FAIL } from '../../../constants/requestStates';
 
 export default defaultsDeep({
@@ -21,4 +21,4 @@ export default defaultsDeep({
             }
         },
     }
-}, requestStore);
+}, baseRequestStore);
