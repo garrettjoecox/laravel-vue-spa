@@ -2055,6 +2055,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2090,7 +2093,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('auth/login', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('auth/login', ['hasValidationError', 'getValidationError'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('auth/login', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('auth/login', ['hasValidationError', 'getValidationError', 'inProgress'])),
   methods: _objectSpread({
     inputState: _utils_formUtils__WEBPACK_IMPORTED_MODULE_4__["inputState"]
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])('auth/login', ['clearValidationError']), {
@@ -2280,6 +2283,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2331,7 +2336,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('auth/register', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('auth/register', ['hasValidationError', 'getValidationError'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('auth/register', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('auth/register', ['hasValidationError', 'getValidationError', 'inProgress'])),
   methods: _objectSpread({
     inputState: _utils_formUtils__WEBPACK_IMPORTED_MODULE_4__["inputState"]
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])('auth/register', ['clearValidationError']), {
@@ -53455,7 +53460,7 @@ var render = function() {
       "div",
       {
         staticClass:
-          "container flex-fill d-flex align-items-center justify-content-center"
+          "container flex-fill d-md-flex pt-5 pt-md-0 align-items-center justify-content-center"
       },
       [
         _c(
@@ -53640,9 +53645,28 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-lg btn-primary btn-block",
-                  attrs: { type: "submit", disabled: _vm.$v.$invalid }
+                  attrs: {
+                    type: "submit",
+                    disabled: _vm.$v.$invalid || _vm.inProgress
+                  }
                 },
-                [_vm._v("\n                    Log In\n                ")]
+                [
+                  _vm.inProgress
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "spinner-grow spinner-grow-sm text-light",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
+                    : _c("span", [_vm._v("Log In")])
+                ]
               )
             ]),
             _vm._v(" "),
@@ -53695,7 +53719,7 @@ var render = function() {
       "div",
       {
         staticClass:
-          "container flex-fill d-flex align-items-center justify-content-center"
+          "container flex-fill d-md-flex pt-5 pt-md-0 align-items-center justify-content-center"
       },
       [
         _c(
@@ -53801,7 +53825,6 @@ var render = function() {
                       name: "email",
                       autocomplete: "email",
                       required: "",
-                      autofocus: "",
                       placeholder: "you@example.com"
                     },
                     model: {
@@ -53995,12 +54018,27 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-lg btn-primary btn-block",
-                  attrs: { type: "submit", disabled: _vm.$v.$invalid }
+                  attrs: {
+                    type: "submit",
+                    disabled: _vm.$v.$invalid || _vm.inProgress
+                  }
                 },
                 [
-                  _vm._v(
-                    "\n                    Create your Account\n                "
-                  )
+                  _vm.inProgress
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "spinner-grow spinner-grow-sm text-light",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
+                    : _c("span", [_vm._v("Create your Account")])
                 ]
               )
             ]),
@@ -73128,7 +73166,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__["STATE_FAIL"]);
-                commit('setErrors', _context.t0.response.data.errors);
+                commit('setError', _context.t0.response.data);
 
               case 16:
               case "end":
@@ -73201,6 +73239,15 @@ __webpack_require__.r(__webpack_exports__);
       return function (field) {
         return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.has(state, "error.errors.".concat(field, "[0]"));
       };
+    },
+    successful: function successful(state) {
+      return state.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_SUCCESS"];
+    },
+    failed: function failed(state) {
+      return state.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_FAIL"];
+    },
+    inProgress: function inProgress(state) {
+      return state.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_IN_PROGRESS"];
     }
   },
   actions: {

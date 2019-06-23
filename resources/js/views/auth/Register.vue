@@ -1,6 +1,6 @@
 <template>
     <div class="flex-fill overflow-scroll d-flex">
-        <div class="container flex-fill d-flex align-items-center justify-content-center">
+        <div class="container flex-fill d-md-flex pt-5 pt-md-0 align-items-center justify-content-center">
             <b-form
                 novalidate
                 @submit.prevent="onSubmit"
@@ -47,7 +47,6 @@
                             v-model.trim="$v.form.email.$model"
                             autocomplete="email"
                             required
-                            autofocus
                             placeholder="you@example.com"
                         />
                         <span class="invalid-feedback" role="alert">
@@ -105,8 +104,11 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block" :disabled="$v.$invalid">
-                        Create your Account
+                    <button type="submit" class="btn btn-lg btn-primary btn-block" :disabled="$v.$invalid || inProgress">
+                        <div class="spinner-grow spinner-grow-sm text-light" role="status" v-if="inProgress">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <span v-else>Create your Account</span>
                     </button>
                 </div>
 
@@ -179,6 +181,7 @@ export default {
         ...mapGetters('auth/register', [
             'hasValidationError',
             'getValidationError',
+            'inProgress',
         ]),
     },
 
