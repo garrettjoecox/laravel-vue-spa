@@ -1,93 +1,148 @@
 <template>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Login</div>
+    <div class="flex-fill overflow-scroll d-flex">
+        <div class="container flex-fill d-flex align-items-center justify-content-center">
+            <b-form
+                novalidate
+                @submit.prevent="onSubmit"
+                @keydown="clearValidationError($event.target.name)"
+                class="col-md-8 col-lg-6 pb-5"
+            >
+                <h1 class="text-center">Welcome Back.</h1>
+                <h5 class="mb-5 text-center text-muted">Log into your account here:</h5>
 
-                    <div class="card-body">
-                        <form v-on:submit.prevent="onSubmit">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
 
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">Email Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" :class="{ 'is-invalid': errors.email }" name="email" v-model="email" required autocomplete="email" autofocus>
-                                    <span class="invalid-feedback" role="alert" v-if="errors.email">
-                                        <strong>{{errors.email[0]}}</strong>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" name="password" v-model="password" required autocomplete="current-password">
-
-                                    <span class="invalid-feedback" role="alert" v-if="errors.password">
-                                        <strong>{{errors.password[0]}}</strong>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
-
-                                        <label class="form-check-label" for="remember">
-                                            Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
-                                    </button>
-
-                                    <router-link class="btn btn-link" to="/password/email">
-                                        Forgot Your Password?
-                                    </router-link>
-                                </div>
-                            </div>
-                        </form>
+                    <div>
+                        <b-form-input
+                            id="email"
+                            type="email"
+                            class="form-control form-control-lg"
+                            :state="inputState('email')"
+                            name="email"
+                            v-model.trim="$v.form.email.$model"
+                            autocomplete="email"
+                            required
+                            autofocus
+                            placeholder="you@example.com"
+                        />
+                        <span class="invalid-feedback" role="alert">
+                            <p class="mb-0" v-if="!$v.form.email.noValidationError"> {{ getValidationError('email') }} </p>
+                            <p class="mb-0" v-if="!$v.form.email.required">Email is required</p>
+                            <p class="mb-0" v-if="!$v.form.email.email">Please enter a valid email.</p>
+                        </span>
                     </div>
                 </div>
-            </div>
+
+                <div class="form-group">
+                    <div class="d-flex align-items-baseline">
+                        <label for="password">Password</label>
+
+                        <router-link class="btn-link ml-auto" to="/password/email">
+                            Forgot Password?
+                        </router-link>
+                    </div>
+
+                    <div>
+                        <b-form-input
+                            id="password"
+                            type="password"
+                            class="form-control form-control-lg"
+                            :state="inputState('password')"
+                            name="password"
+                            v-model.trim="$v.form.password.$model"
+                            autocomplete="password"
+                            required
+                            placeholder="Enter 8 characters or more"
+                        />
+                        <span class="invalid-feedback" role="alert">
+                            <p class="mb-0" v-if="!$v.form.password.noValidationError"> {{ getValidationError('password') }} </p>
+                            <p class="mb-0" v-if="!$v.form.password.required">Password is required</p>
+                            <p class="mb-0" v-if="!$v.form.password.minLength">Password must be at least 8 characters</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block" :disabled="$v.$invalid">
+                        Log In
+                    </button>
+                </div>
+
+                <div class="text-center mt-5 text-muted">
+                    Don't have an account?
+                    <router-link class="btn-link" to="/register">Sign Up</router-link>
+                </div>
+            </b-form>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import {
+    email,
+    required,
+    minLength,
+} from 'vuelidate/lib/validators';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 import { STATE_SUCCESS } from '../../constants/requestStates';
+
+function inputState(field, form) {
+    if (!form) form = this.$v.form;
+
+    return form[field].$dirty ? !form[field].$error : null
+}
 
 export default {
     data() {
         return {
-            email: 'garrettjcox@gmail.com',
-            password: 'password',
+            form: {
+                email: '',
+                password: '',
+            },
+        };
+    },
+
+    validations() {
+        return {
+            form: {
+                email: {
+                    email,
+                    required,
+                    noServerError: () => !this.hasValidationError('email'),
+                },
+                password: {
+                    minLength: minLength(8),
+                    required,
+                    noServerError: () => !this.hasValidationError('password'),
+                },
+            }
         };
     },
 
     computed: {
-        ...mapState('auth/login', {
-            requestState: state => state.requestState,
-            errors: state => state.errors,
-        }),
+        ...mapState('auth/login', [
+            'requestState',
+            'error',
+        ]),
+
+        ...mapGetters('auth/login', [
+            'hasValidationError',
+            'getValidationError',
+        ]),
     },
 
     methods: {
+        inputState,
+        ...mapMutations('auth/login', [
+            'clearValidationError',
+        ]),
+
         async onSubmit() {
-            await this.$store.dispatch('auth/login/sendRequest', {
-                email: this.email,
-                password: this.password,
-            });
+            this.$v.form.$touch();
+
+            await this.$store.dispatch('auth/login/sendRequest', this.form);
 
             if (this.requestState === STATE_SUCCESS) {
                 this.$router.push(this.$route.query.redirect || '/home');

@@ -7,6 +7,7 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
+@import '~sass-material-colors/sass/sass-material-colors';
 
 html, body, #app {
     max-height: 100vh;
@@ -18,4 +19,8 @@ html, body, #app {
 
 .navbar {
     background-color: #fff;
+}
+
+.overflow-scroll {
+    overflow: scroll;
 }

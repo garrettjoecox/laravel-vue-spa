@@ -2,13 +2,13 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import store from './store';
-import NotFound from './views/NotFound';
-import Welcome from './views/Welcome';
-import Home from './views/Home';
-import Register from './views/auth/Register';
-import Login from './views/auth/Login';
-import PasswordEmail from './views/auth/passwords/Email';
-import PasswordReset from './views/auth/passwords/Reset';
+import NotFound from './views/NotFound.vue';
+import Welcome from './views/Welcome.vue';
+import Home from './views/Home.vue';
+import Register from './views/auth/Register.vue';
+import Login from './views/auth/Login.vue';
+import PasswordEmail from './views/auth/passwords/Email.vue';
+import PasswordReset from './views/auth/passwords/Reset.vue';
 
 Vue.use(VueRouter);
 
@@ -20,12 +20,12 @@ const router = new VueRouter({
     routes: [
         {
             path: '*',
-            component: NotFound
+            component: NotFound,
         },
 
         {
             path: '/',
-            component: Welcome
+            component: Welcome,
         },
 
         {
@@ -40,6 +40,7 @@ const router = new VueRouter({
             path: '/register',
             component: Register,
             meta: {
+                hideNavbar: true,
                 guest: true,
             },
         },
@@ -48,6 +49,7 @@ const router = new VueRouter({
             path: '/login',
             component: Login,
             meta: {
+                hideNavbar: true,
                 guest: true,
             },
         },
@@ -67,7 +69,7 @@ const router = new VueRouter({
                 guest: true,
             },
         },
-    ]
+    ],
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -79,7 +81,7 @@ router.beforeEach(async (to, from, next) => {
         if (!store.state.auth.isAuth) {
             next({
                 path: '/login',
-                query: { redirect: to.fullPath }
+                query: { redirect: to.fullPath },
             });
         } else {
             next();

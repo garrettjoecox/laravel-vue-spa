@@ -1960,8 +1960,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../constants/requestStates */ "./resources/js/constants/requestStates.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2036,24 +2038,66 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+
+
+
+function inputState(field, form) {
+  if (!form) form = this.$v.form;
+  return form[field].$dirty ? !form[field].$error : null;
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      email: 'garrettjcox@gmail.com',
-      password: 'password'
+      form: {
+        email: '',
+        password: ''
+      }
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth/login', {
-    requestState: function requestState(state) {
-      return state.requestState;
-    },
-    errors: function errors(state) {
-      return state.errors;
-    }
-  })),
-  methods: {
+  validations: function validations() {
+    var _this = this;
+
+    return {
+      form: {
+        email: {
+          email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+          noServerError: function noServerError() {
+            return !_this.hasValidationError('email');
+          }
+        },
+        password: {
+          minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8),
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+          noServerError: function noServerError() {
+            return !_this.hasValidationError('password');
+          }
+        }
+      }
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('auth/login', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('auth/login', ['hasValidationError', 'getValidationError'])),
+  methods: _objectSpread({
+    inputState: inputState
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])('auth/login', ['clearValidationError']), {
     onSubmit: function () {
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
@@ -2062,18 +2106,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return this.$store.dispatch('auth/login/sendRequest', {
-                  email: this.email,
-                  password: this.password
-                });
+                this.$v.form.$touch();
+                _context.next = 3;
+                return this.$store.dispatch('auth/login/sendRequest', this.form);
 
-              case 2:
-                if (this.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]) {
+              case 3:
+                if (this.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_3__["STATE_SUCCESS"]) {
                   this.$router.push(this.$route.query.redirect || '/home');
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -2087,7 +2129,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return onSubmit;
     }()
-  },
+  }),
   created: function created() {
     this.$store.commit('auth/login/reset');
   }
@@ -52976,127 +53018,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "navbar navbar-expand-md navbar-light shadow-sm" },
-    [
-      _c(
+  return !_vm.$route.meta.hideNavbar
+    ? _c(
         "div",
-        { staticClass: "container" },
+        { staticClass: "navbar navbar-expand-md navbar-light shadow-sm" },
         [
           _c(
-            "router-link",
-            { staticClass: "navbar-brand", attrs: { to: "/" } },
-            [_vm._v("\n            Vue\n        ")]
-          ),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
             "div",
-            {
-              staticClass: "collapse navbar-collapse",
-              attrs: { id: "navbarSupportedContent" }
-            },
+            { staticClass: "container" },
             [
-              _vm.isAuth
-                ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
+              _c(
+                "router-link",
+                { staticClass: "navbar-brand", attrs: { to: "/" } },
+                [_vm._v("\n            Vue\n        ")]
+              ),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "collapse navbar-collapse",
+                  attrs: { id: "navbarSupportedContent" }
+                },
+                [
+                  _vm.isAuth
+                    ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
                         _c(
-                          "router-link",
-                          { staticClass: "nav-link", attrs: { to: "/home" } },
-                          [_vm._v("Home")]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "nav-item dropdown" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "nav-link dropdown-toggle",
-                          attrs: {
-                            id: "navbarDropdown",
-                            href: "#",
-                            role: "button",
-                            "data-toggle": "dropdown",
-                            "aria-haspopup": "true",
-                            "aria-expanded": "false"
-                          }
-                        },
-                        [
-                          _c("span", [
-                            _vm._v(_vm._s(_vm.user && _vm.user.name))
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "caret" })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "dropdown-menu dropdown-menu-right",
-                          attrs: { "aria-labelledby": "navbarDropdown" }
-                        },
-                        [
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: "/home" }
+                              },
+                              [_vm._v("Home")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "nav-item dropdown" }, [
                           _c(
-                            "button",
+                            "a",
                             {
-                              staticClass: "dropdown-item",
-                              on: { click: _vm.logout }
+                              staticClass: "nav-link dropdown-toggle",
+                              attrs: {
+                                id: "navbarDropdown",
+                                href: "#",
+                                role: "button",
+                                "data-toggle": "dropdown",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false"
+                              }
                             },
                             [
-                              _vm._v(
-                                "\n                            Logout\n                        "
+                              _c("span", [
+                                _vm._v(_vm._s(_vm.user && _vm.user.name))
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "caret" })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "dropdown-menu dropdown-menu-right",
+                              attrs: { "aria-labelledby": "navbarDropdown" }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "dropdown-item",
+                                  on: { click: _vm.logout }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Logout\n                        "
+                                  )
+                                ]
                               )
                             ]
                           )
-                        ]
-                      )
-                    ])
-                  ])
-                : _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
+                        ])
+                      ])
+                    : _c("ul", { staticClass: "navbar-nav ml-auto" }, [
                         _c(
-                          "router-link",
-                          { staticClass: "nav-link", attrs: { to: "/login" } },
-                          [_vm._v("Login")]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: "/login" }
+                              },
+                              [_vm._v("Login")]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
                         _c(
-                          "router-link",
-                          {
-                            staticClass: "nav-link",
-                            attrs: { to: "/register" }
-                          },
-                          [_vm._v("Register")]
+                          "li",
+                          { staticClass: "nav-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "nav-link",
+                                attrs: { to: "/register" }
+                              },
+                              [_vm._v("Register")]
+                            )
+                          ],
+                          1
                         )
-                      ],
-                      1
-                    )
-                  ])
-            ]
+                      ])
+                ]
+              )
+            ],
+            1
           )
-        ],
-        1
+        ]
       )
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -53318,206 +53368,225 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-5" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Login")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.onSubmit($event)
-                  }
-                }
+  return _c("div", { staticClass: "flex-fill overflow-scroll d-flex" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "container flex-fill d-flex align-items-center justify-content-center"
+      },
+      [
+        _c(
+          "b-form",
+          {
+            staticClass: "col-md-8 col-lg-6 pb-5",
+            attrs: { novalidate: "" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
               },
-              [
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-md-4 col-form-label text-md-right",
-                      attrs: { for: "email" }
+              keydown: function($event) {
+                return _vm.clearValidationError($event.target.name)
+              }
+            }
+          },
+          [
+            _c("h1", { staticClass: "text-center" }, [_vm._v("Welcome Back.")]),
+            _vm._v(" "),
+            _c("h5", { staticClass: "mb-5 text-center text-muted" }, [
+              _vm._v("Log into your account here:")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "email" } }, [
+                _vm._v("Email Address")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c("b-form-input", {
+                    staticClass: "form-control form-control-lg",
+                    attrs: {
+                      id: "email",
+                      type: "email",
+                      state: _vm.inputState("email"),
+                      name: "email",
+                      autocomplete: "email",
+                      required: "",
+                      autofocus: "",
+                      placeholder: "you@example.com"
                     },
-                    [_vm._v("Email Address")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.email,
-                          expression: "email"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: { "is-invalid": _vm.errors.email },
-                      attrs: {
-                        id: "email",
-                        type: "email",
-                        name: "email",
-                        required: "",
-                        autocomplete: "email",
-                        autofocus: ""
-                      },
-                      domProps: { value: _vm.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.email = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.email
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          [_c("strong", [_vm._v(_vm._s(_vm.errors.email[0]))])]
+                    model: {
+                      value: _vm.$v.form.email.$model,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.$v.form.email,
+                          "$model",
+                          typeof $$v === "string" ? $$v.trim() : $$v
                         )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
+                      },
+                      expression: "$v.form.email.$model"
+                    }
+                  }),
+                  _vm._v(" "),
                   _c(
-                    "label",
+                    "span",
                     {
-                      staticClass: "col-md-4 col-form-label text-md-right",
-                      attrs: { for: "password" }
+                      staticClass: "invalid-feedback",
+                      attrs: { role: "alert" }
                     },
-                    [_vm._v("Password")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.password,
-                          expression: "password"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: { "is-invalid": _vm.errors.password },
-                      attrs: {
-                        id: "password",
-                        type: "password",
-                        name: "password",
-                        required: "",
-                        autocomplete: "current-password"
-                      },
-                      domProps: { value: _vm.password },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.password = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.password
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          [
-                            _c("strong", [
-                              _vm._v(_vm._s(_vm.errors.password[0]))
-                            ])
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row mb-0" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-md-8 offset-md-4" },
                     [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    Login\n                                "
-                          )
-                        ]
-                      ),
+                      !_vm.$v.form.email.noValidationError
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.getValidationError("email")) +
+                                " "
+                            )
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-link",
-                          attrs: { to: "/password/email" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    Forgot Your Password?\n                                "
-                          )
-                        ]
-                      )
-                    ],
-                    1
+                      !_vm.$v.form.email.required
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v("Email is required")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.form.email.email
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v("Please enter a valid email.")
+                          ])
+                        : _vm._e()
+                    ]
                   )
-                ])
-              ]
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "div",
+                { staticClass: "d-flex align-items-baseline" },
+                [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn-link ml-auto",
+                      attrs: { to: "/password/email" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Forgot Password?\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c("b-form-input", {
+                    staticClass: "form-control form-control-lg",
+                    attrs: {
+                      id: "password",
+                      type: "password",
+                      state: _vm.inputState("password"),
+                      name: "password",
+                      autocomplete: "password",
+                      required: "",
+                      placeholder: "Enter 8 characters or more"
+                    },
+                    model: {
+                      value: _vm.$v.form.password.$model,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.$v.form.password,
+                          "$model",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "$v.form.password.$model"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "invalid-feedback",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      !_vm.$v.form.password.noValidationError
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.getValidationError("password")) +
+                                " "
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.form.password.required
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v("Password is required")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$v.form.password.minLength
+                        ? _c("p", { staticClass: "mb-0" }, [
+                            _vm._v("Password must be at least 8 characters")
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-primary btn-block",
+                  attrs: { type: "submit", disabled: _vm.$v.$invalid }
+                },
+                [_vm._v("\n                    Log In\n                ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "text-center mt-5 text-muted" },
+              [
+                _vm._v(
+                  "\n                Don't have an account?\n                "
+                ),
+                _c(
+                  "router-link",
+                  { staticClass: "btn-link", attrs: { to: "/register" } },
+                  [_vm._v("Sign Up")]
+                )
+              ],
+              1
             )
-          ])
-        ])
-      ])
-    ])
+          ]
+        )
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-md-6 offset-md-4" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: { type: "checkbox", name: "remember", id: "remember" }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "form-check-label", attrs: { for: "remember" } },
-            [
-              _vm._v(
-                "\n                                        Remember Me\n                                    "
-              )
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -69689,6 +69758,922 @@ function withParams(paramsOrClosure, maybeValidator) {
 
 /***/ }),
 
+/***/ "./node_modules/vuelidate/lib/validators/alpha.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alpha.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alpha', /^[a-zA-Z]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alphaNum.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alphaNum.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alphaNum', /^[a-zA-Z0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/and.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/and.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'and'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid && fn.apply(_this, args);
+    }, true);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/between.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/between.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min, max) {
+  return (0, _common.withParams)({
+    type: 'between',
+    min: min,
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +min <= +value && +max >= +value;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/common.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/common.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "withParams", {
+  enumerable: true,
+  get: function get() {
+    return _withParams.default;
+  }
+});
+exports.regex = exports.ref = exports.len = exports.req = void 0;
+
+var _withParams = _interopRequireDefault(__webpack_require__(/*! ../withParams */ "./node_modules/vuelidate/lib/withParams.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var req = function req(value) {
+  if (Array.isArray(value)) return !!value.length;
+
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  if (value === false) {
+    return true;
+  }
+
+  if (value instanceof Date) {
+    return !isNaN(value.getTime());
+  }
+
+  if (_typeof(value) === 'object') {
+    for (var _ in value) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return !!String(value).length;
+};
+
+exports.req = req;
+
+var len = function len(value) {
+  if (Array.isArray(value)) return value.length;
+
+  if (_typeof(value) === 'object') {
+    return Object.keys(value).length;
+  }
+
+  return String(value).length;
+};
+
+exports.len = len;
+
+var ref = function ref(reference, vm, parentVm) {
+  return typeof reference === 'function' ? reference.call(vm, parentVm) : parentVm[reference];
+};
+
+exports.ref = ref;
+
+var regex = function regex(type, expr) {
+  return (0, _withParams.default)({
+    type: type
+  }, function (value) {
+    return !req(value) || expr.test(value);
+  });
+};
+
+exports.regex = regex;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/decimal.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/decimal.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('decimal', /^[-]?\d*(\.\d+)?$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/email.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/email.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var emailRegex = /(^$|^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/;
+
+var _default = (0, _common.regex)('email', emailRegex);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "alpha", {
+  enumerable: true,
+  get: function get() {
+    return _alpha.default;
+  }
+});
+Object.defineProperty(exports, "alphaNum", {
+  enumerable: true,
+  get: function get() {
+    return _alphaNum.default;
+  }
+});
+Object.defineProperty(exports, "numeric", {
+  enumerable: true,
+  get: function get() {
+    return _numeric.default;
+  }
+});
+Object.defineProperty(exports, "between", {
+  enumerable: true,
+  get: function get() {
+    return _between.default;
+  }
+});
+Object.defineProperty(exports, "email", {
+  enumerable: true,
+  get: function get() {
+    return _email.default;
+  }
+});
+Object.defineProperty(exports, "ipAddress", {
+  enumerable: true,
+  get: function get() {
+    return _ipAddress.default;
+  }
+});
+Object.defineProperty(exports, "macAddress", {
+  enumerable: true,
+  get: function get() {
+    return _macAddress.default;
+  }
+});
+Object.defineProperty(exports, "maxLength", {
+  enumerable: true,
+  get: function get() {
+    return _maxLength.default;
+  }
+});
+Object.defineProperty(exports, "minLength", {
+  enumerable: true,
+  get: function get() {
+    return _minLength.default;
+  }
+});
+Object.defineProperty(exports, "required", {
+  enumerable: true,
+  get: function get() {
+    return _required.default;
+  }
+});
+Object.defineProperty(exports, "requiredIf", {
+  enumerable: true,
+  get: function get() {
+    return _requiredIf.default;
+  }
+});
+Object.defineProperty(exports, "requiredUnless", {
+  enumerable: true,
+  get: function get() {
+    return _requiredUnless.default;
+  }
+});
+Object.defineProperty(exports, "sameAs", {
+  enumerable: true,
+  get: function get() {
+    return _sameAs.default;
+  }
+});
+Object.defineProperty(exports, "url", {
+  enumerable: true,
+  get: function get() {
+    return _url.default;
+  }
+});
+Object.defineProperty(exports, "or", {
+  enumerable: true,
+  get: function get() {
+    return _or.default;
+  }
+});
+Object.defineProperty(exports, "and", {
+  enumerable: true,
+  get: function get() {
+    return _and.default;
+  }
+});
+Object.defineProperty(exports, "not", {
+  enumerable: true,
+  get: function get() {
+    return _not.default;
+  }
+});
+Object.defineProperty(exports, "minValue", {
+  enumerable: true,
+  get: function get() {
+    return _minValue.default;
+  }
+});
+Object.defineProperty(exports, "maxValue", {
+  enumerable: true,
+  get: function get() {
+    return _maxValue.default;
+  }
+});
+Object.defineProperty(exports, "integer", {
+  enumerable: true,
+  get: function get() {
+    return _integer.default;
+  }
+});
+Object.defineProperty(exports, "decimal", {
+  enumerable: true,
+  get: function get() {
+    return _decimal.default;
+  }
+});
+exports.helpers = void 0;
+
+var _alpha = _interopRequireDefault(__webpack_require__(/*! ./alpha */ "./node_modules/vuelidate/lib/validators/alpha.js"));
+
+var _alphaNum = _interopRequireDefault(__webpack_require__(/*! ./alphaNum */ "./node_modules/vuelidate/lib/validators/alphaNum.js"));
+
+var _numeric = _interopRequireDefault(__webpack_require__(/*! ./numeric */ "./node_modules/vuelidate/lib/validators/numeric.js"));
+
+var _between = _interopRequireDefault(__webpack_require__(/*! ./between */ "./node_modules/vuelidate/lib/validators/between.js"));
+
+var _email = _interopRequireDefault(__webpack_require__(/*! ./email */ "./node_modules/vuelidate/lib/validators/email.js"));
+
+var _ipAddress = _interopRequireDefault(__webpack_require__(/*! ./ipAddress */ "./node_modules/vuelidate/lib/validators/ipAddress.js"));
+
+var _macAddress = _interopRequireDefault(__webpack_require__(/*! ./macAddress */ "./node_modules/vuelidate/lib/validators/macAddress.js"));
+
+var _maxLength = _interopRequireDefault(__webpack_require__(/*! ./maxLength */ "./node_modules/vuelidate/lib/validators/maxLength.js"));
+
+var _minLength = _interopRequireDefault(__webpack_require__(/*! ./minLength */ "./node_modules/vuelidate/lib/validators/minLength.js"));
+
+var _required = _interopRequireDefault(__webpack_require__(/*! ./required */ "./node_modules/vuelidate/lib/validators/required.js"));
+
+var _requiredIf = _interopRequireDefault(__webpack_require__(/*! ./requiredIf */ "./node_modules/vuelidate/lib/validators/requiredIf.js"));
+
+var _requiredUnless = _interopRequireDefault(__webpack_require__(/*! ./requiredUnless */ "./node_modules/vuelidate/lib/validators/requiredUnless.js"));
+
+var _sameAs = _interopRequireDefault(__webpack_require__(/*! ./sameAs */ "./node_modules/vuelidate/lib/validators/sameAs.js"));
+
+var _url = _interopRequireDefault(__webpack_require__(/*! ./url */ "./node_modules/vuelidate/lib/validators/url.js"));
+
+var _or = _interopRequireDefault(__webpack_require__(/*! ./or */ "./node_modules/vuelidate/lib/validators/or.js"));
+
+var _and = _interopRequireDefault(__webpack_require__(/*! ./and */ "./node_modules/vuelidate/lib/validators/and.js"));
+
+var _not = _interopRequireDefault(__webpack_require__(/*! ./not */ "./node_modules/vuelidate/lib/validators/not.js"));
+
+var _minValue = _interopRequireDefault(__webpack_require__(/*! ./minValue */ "./node_modules/vuelidate/lib/validators/minValue.js"));
+
+var _maxValue = _interopRequireDefault(__webpack_require__(/*! ./maxValue */ "./node_modules/vuelidate/lib/validators/maxValue.js"));
+
+var _integer = _interopRequireDefault(__webpack_require__(/*! ./integer */ "./node_modules/vuelidate/lib/validators/integer.js"));
+
+var _decimal = _interopRequireDefault(__webpack_require__(/*! ./decimal */ "./node_modules/vuelidate/lib/validators/decimal.js"));
+
+var helpers = _interopRequireWildcard(__webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js"));
+
+exports.helpers = helpers;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/integer.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/integer.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('integer', /^-?[0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/ipAddress.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/ipAddress.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'ipAddress'
+}, function (value) {
+  if (!(0, _common.req)(value)) {
+    return true;
+  }
+
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  var nibbles = value.split('.');
+  return nibbles.length === 4 && nibbles.every(nibbleValid);
+});
+
+exports.default = _default;
+
+var nibbleValid = function nibbleValid(nibble) {
+  if (nibble.length > 3 || nibble.length === 0) {
+    return false;
+  }
+
+  if (nibble[0] === '0' && nibble !== '0') {
+    return false;
+  }
+
+  if (!nibble.match(/^\d+$/)) {
+    return false;
+  }
+
+  var numeric = +nibble | 0;
+  return numeric >= 0 && numeric <= 255;
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/macAddress.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/macAddress.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  var separator = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ':';
+  return (0, _common.withParams)({
+    type: 'macAddress'
+  }, function (value) {
+    if (!(0, _common.req)(value)) {
+      return true;
+    }
+
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    var parts = typeof separator === 'string' && separator !== '' ? value.split(separator) : value.length === 12 || value.length === 16 ? value.match(/.{2}/g) : null;
+    return parts !== null && (parts.length === 6 || parts.length === 8) && parts.every(hexValid);
+  });
+};
+
+exports.default = _default;
+
+var hexValid = function hexValid(hex) {
+  return hex.toLowerCase().match(/^[0-9a-f]{2}$/);
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxLength.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'maxLength',
+    max: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) <= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxValue.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(max) {
+  return (0, _common.withParams)({
+    type: 'maxValue',
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value <= +max;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minLength.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'minLength',
+    min: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) >= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minValue.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min) {
+  return (0, _common.withParams)({
+    type: 'minValue',
+    min: min
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value >= +min;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/not.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/not.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(validator) {
+  return (0, _common.withParams)({
+    type: 'not'
+  }, function (value, vm) {
+    return !(0, _common.req)(value) || !validator.call(this, value, vm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/numeric.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/numeric.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('numeric', /^[0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/or.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/or.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'or'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid || fn.apply(_this, args);
+    }, false);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/required.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/required.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'required'
+}, _common.req);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredIf.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredIf.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredIf',
+    prop: prop
+  }, function (value, parentVm) {
+    return (0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredUnless.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredUnless.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredUnless',
+    prop: prop
+  }, function (value, parentVm) {
+    return !(0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/sameAs.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/sameAs.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(equalTo) {
+  return (0, _common.withParams)({
+    type: 'sameAs',
+    eq: equalTo
+  }, function (value, parentVm) {
+    return value === (0, _common.ref)(equalTo, this, parentVm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/url.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/url.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+
+var _default = (0, _common.regex)('url', urlRegex);
+
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/vuelidate/lib/vval.js":
 /*!********************************************!*\
   !*** ./node_modules/vuelidate/lib/vval.js ***!
@@ -69850,6 +70835,59 @@ function h(tag, key, args) {
     args: args
   };
 }
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParams.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParams.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var withParams = Object({"MIX_PUSHER_APP_KEY":"","MIX_PUSHER_APP_CLUSTER":"mt1","NODE_ENV":"development"}).BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
+var _default = withParams;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParamsBrowser.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParamsBrowser.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.withParams = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var root = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
+
+var fakeWithParams = function fakeWithParams(paramsOrClosure, maybeValidator) {
+  if (_typeof(paramsOrClosure) === 'object' && maybeValidator !== undefined) {
+    return maybeValidator;
+  }
+
+  return paramsOrClosure(function () {});
+};
+
+var withParams = root.vuelidate ? root.vuelidate.withParams : fakeWithParams;
+exports.withParams = withParams;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -71224,13 +72262,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _views_NotFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/NotFound */ "./resources/js/views/NotFound.vue");
-/* harmony import */ var _views_Welcome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/Welcome */ "./resources/js/views/Welcome.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _views_auth_Register__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/auth/Register */ "./resources/js/views/auth/Register.vue");
-/* harmony import */ var _views_auth_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/auth/Login */ "./resources/js/views/auth/Login.vue");
-/* harmony import */ var _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/auth/passwords/Email */ "./resources/js/views/auth/passwords/Email.vue");
-/* harmony import */ var _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/auth/passwords/Reset */ "./resources/js/views/auth/passwords/Reset.vue");
+/* harmony import */ var _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/NotFound.vue */ "./resources/js/views/NotFound.vue");
+/* harmony import */ var _views_Welcome_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/Welcome.vue */ "./resources/js/views/Welcome.vue");
+/* harmony import */ var _views_Home_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/Home.vue */ "./resources/js/views/Home.vue");
+/* harmony import */ var _views_auth_Register_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/auth/Register.vue */ "./resources/js/views/auth/Register.vue");
+/* harmony import */ var _views_auth_Login_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/auth/Login.vue */ "./resources/js/views/auth/Login.vue");
+/* harmony import */ var _views_auth_passwords_Email_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/auth/passwords/Email.vue */ "./resources/js/views/auth/passwords/Email.vue");
+/* harmony import */ var _views_auth_passwords_Reset_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/auth/passwords/Reset.vue */ "./resources/js/views/auth/passwords/Reset.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -71253,37 +72291,39 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   linkActiveClass: 'font-bold',
   routes: [{
     path: '*',
-    component: _views_NotFound__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _views_NotFound_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/',
-    component: _views_Welcome__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _views_Welcome_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: '/home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_6__["default"],
+    component: _views_Home_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     meta: {
       requiresAuth: true
     }
   }, {
     path: '/register',
-    component: _views_auth_Register__WEBPACK_IMPORTED_MODULE_7__["default"],
+    component: _views_auth_Register_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     meta: {
+      hideNavbar: true,
       guest: true
     }
   }, {
     path: '/login',
-    component: _views_auth_Login__WEBPACK_IMPORTED_MODULE_8__["default"],
+    component: _views_auth_Login_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
+      hideNavbar: true,
       guest: true
     }
   }, {
     path: '/password/email',
-    component: _views_auth_passwords_Email__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _views_auth_passwords_Email_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     meta: {
       guest: true
     }
   }, {
     path: '/password/reset/:token',
-    component: _views_auth_passwords_Reset__WEBPACK_IMPORTED_MODULE_10__["default"],
+    component: _views_auth_passwords_Reset_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     meta: {
       guest: true
     }
@@ -71501,7 +72541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__["STATE_FAIL"]);
-                commit('setErrors', _context.t0.response.data.errors);
+                commit('setError', _context.t0.response.data);
 
               case 16:
               case "end":
@@ -71951,14 +72991,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/requestStates */ "./resources/js/constants/requestStates.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/requestStates */ "./resources/js/constants/requestStates.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    requestState: _constants_requestStates__WEBPACK_IMPORTED_MODULE_0__["STATE_PRE"],
+    requestState: _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_PRE"],
     data: null,
-    errors: {}
+    error: null
   },
   mutations: {
     setRequestState: function setRequestState(state, requestState) {
@@ -71967,18 +73010,39 @@ __webpack_require__.r(__webpack_exports__);
     setData: function setData(state, data) {
       state.data = data;
     },
-    setErrors: function setErrors(state, errors) {
-      state.errors = errors;
+    setError: function setError(state, error) {
+      state.error = error;
+    },
+    clearValidationError: function clearValidationError(state, field) {
+      if (state.error && state.error.errors) {
+        delete state.error.errors[field];
+      }
     },
     reset: function reset(state) {
-      state.requestState = _constants_requestStates__WEBPACK_IMPORTED_MODULE_0__["STATE_PRE"];
+      state.requestState = _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_PRE"];
       state.data = null;
-      state.errors = {};
+      state.error = null;
+    }
+  },
+  getters: {
+    getValidationError: function getValidationError(state) {
+      return function (field) {
+        return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.get(state, "error.errors.".concat(field, "[0]"));
+      };
+    },
+    hasValidationError: function hasValidationError(state) {
+      return function (field) {
+        return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.has(state, "error.errors.".concat(field, "[0]"));
+      };
     }
   },
   actions: {
-    sendRequest: function sendRequest() {
-      throw new Error('Overwrite me!');
+    sendRequest: function sendRequest(_ref) {
+      var commit = _ref.commit;
+      var notOverwrittenError = new Error('The makeRequest function must be overwritten');
+      commit('setRequestState', _constants_requestStates__WEBPACK_IMPORTED_MODULE_1__["STATE_FAIL"]);
+      commit('setError', notOverwrittenError);
+      throw notOverwrittenError;
     }
   }
 });

@@ -1,4 +1,6 @@
-import { STATE_PRE } from '../constants/requestStates';
+import _ from 'lodash';
+
+import { STATE_PRE, STATE_FAIL } from '../constants/requestStates';
 
 export default {
     namespaced: true,
@@ -6,7 +8,7 @@ export default {
     state: {
         requestState: STATE_PRE,
         data: null,
-        errors: {},
+        error: null,
     },
 
     mutations: {
@@ -18,20 +20,36 @@ export default {
             state.data = data;
         },
 
-        setErrors(state, errors) {
-            state.errors = errors;
+        setError(state, error) {
+            state.error = error;
+        },
+
+        clearValidationError(state, field) {
+            if (state.error && state.error.errors) {
+                delete state.error.errors[field];
+            }
         },
 
         reset(state) {
             state.requestState = STATE_PRE;
             state.data = null;
-            state.errors = {};
+            state.error = null;
         },
     },
 
+    getters: {
+        getValidationError: state => field => _.get(state, `error.errors.${field}[0]`),
+        hasValidationError: state => field => _.has(state, `error.errors.${field}[0]`),
+    },
+
     actions: {
-        sendRequest() {
-            throw new Error('Overwrite me!');
+        sendRequest({ commit }) {
+            const notOverwrittenError = new Error('The makeRequest function must be overwritten');
+
+            commit('setRequestState', STATE_FAIL);
+            commit('setError', notOverwrittenError);
+
+            throw notOverwrittenError;
         },
-    }
-}
+    },
+};

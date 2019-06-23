@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar navbar-expand-md navbar-light shadow-sm">
+    <div class="navbar navbar-expand-md navbar-light shadow-sm" v-if="!$route.meta.hideNavbar">
         <div class="container">
             <router-link class="navbar-brand" to="/">
                 Vue
@@ -63,6 +63,6 @@ export default {
                 this.$router.push('/login');
             }
         },
-    }
+    },
 }
 </script>
