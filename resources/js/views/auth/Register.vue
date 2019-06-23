@@ -66,7 +66,7 @@
 <script>
 import { mapState } from 'vuex'
 
-import { STATE_SUCCESS } from '../../store/requestStates';
+import { STATE_SUCCESS } from '../../constants/requestStates';
 
 export default {
     data() {

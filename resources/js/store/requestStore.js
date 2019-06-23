@@ -1,4 +1,4 @@
-import { STATE_PRE } from './requestStates';
+import { STATE_PRE } from '../constants/requestStates';
 
 export default {
     namespaced: true,
