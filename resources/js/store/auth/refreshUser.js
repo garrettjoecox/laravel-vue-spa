@@ -18,9 +18,9 @@ export default defaultsDeep({
                 commit('auth/setUser', response.data, { root: true });
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
-                commit('setErrors', error.response.data.errors);
+                commit('setError', error.response.data);
                 commit('auth/clearUser', null, { root: true });
             }
         },
-    }
+    },
 }, baseRequestStore);

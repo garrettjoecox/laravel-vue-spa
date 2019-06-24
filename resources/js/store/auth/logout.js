@@ -18,8 +18,8 @@ export default defaultsDeep({
                 commit('auth/clearUser', null, { root: true });
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
-                commit('setErrors', error.response.data.errors);
+                commit('setError', error.response.data);
             }
         },
-    }
+    },
 }, baseRequestStore);

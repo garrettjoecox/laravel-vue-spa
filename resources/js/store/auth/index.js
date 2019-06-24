@@ -18,7 +18,7 @@ export default {
     },
 
     state: {
-        isAuth: isAuth,
+        isAuth,
         user: null,
     },
 
@@ -31,6 +31,6 @@ export default {
         clearUser(state) {
             state.isAuth = false;
             state.user = null;
-        }
+        },
     },
-}
+};

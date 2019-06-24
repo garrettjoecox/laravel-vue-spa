@@ -1,40 +1,25 @@
 <template>
-    <div class="navbar navbar-expand-md navbar-light shadow-sm" v-if="!$route.meta.hideNavbar">
+    <div class="navbar navbar-expand-md navbar-light" v-if="!$route.meta.hideNavbar">
         <div class="container">
             <router-link class="navbar-brand" to="/">
                 Vue
             </router-link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto" v-if="isAuth">
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/home">Home</router-link>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span>{{ user && user.name }}</span>
-                            <span class="caret"></span>
-                        </a>
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <button class="dropdown-item" v-on:click="logout">
-                                Logout
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto" v-else>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/login">Login</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/register">Register</router-link>
-                    </li>
-                </ul>
-            </div>
+            <b-collapse id="nav-collapse" is-nav>
+                <div class="navbar-nav ml-auto" v-if="isAuth">
+                    <b-nav-item-dropdown right>
+                        <template slot="button-content">{{ user && user.name }}</template>
+                        <b-dropdown-item>Profile</b-dropdown-item>
+                        <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                </div>
+                <div class="navbar-nav ml-auto" v-else>
+                    <router-link class="nav-item nav-link" to="/login">Log In</router-link>
+                    <router-link class="nav-item nav-link" to="/register">Sign Up</router-link>
+                </div>
+            </b-collapse>
         </div>
     </div>
 </template>
@@ -45,17 +30,21 @@ import { STATE_SUCCESS } from '../constants/requestStates';
 
 export default {
     computed: {
-        ...mapState('auth', {
-            isAuth: state => state.isAuth,
-            user: state => state.user,
-        }),
+        ...mapState('auth/logout', [
+            'requestState',
+            'error',
+        ]),
+        ...mapState('auth', [
+            'isAuth',
+            'user',
+        ]),
     },
 
     methods: {
         async logout() {
             await this.$store.dispatch('auth/logout/sendRequest');
 
-            if (this.$store.state.auth.logout.requestState === STATE_SUCCESS) {
+            if (this.requestState === STATE_SUCCESS) {
                 this.$store.dispatch('alert/addTimedAlert', {
                     type: 'primary',
                     message: 'Logged out successfully',

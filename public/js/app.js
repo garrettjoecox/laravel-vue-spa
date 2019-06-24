@@ -1883,32 +1883,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth', {
-    isAuth: function isAuth(state) {
-      return state.isAuth;
-    },
-    user: function user(state) {
-      return state.user;
-    }
-  })),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth/logout', ['requestState', 'error']), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('auth', ['isAuth', 'user'])),
   methods: {
     logout: function () {
       var _logout = _asyncToGenerator(
@@ -1922,7 +1900,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return this.$store.dispatch('auth/logout/sendRequest');
 
               case 2:
-                if (this.$store.state.auth.logout.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]) {
+                if (this.requestState === _constants_requestStates__WEBPACK_IMPORTED_MODULE_2__["STATE_SUCCESS"]) {
                   this.$store.dispatch('alert/addTimedAlert', {
                     type: 'primary',
                     message: 'Logged out successfully'
@@ -2066,8 +2044,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
-        email: '',
-        password: ''
+        email: 'garrettjcox@gmail.com',
+        password: 'password'
       }
     };
   },
@@ -2293,10 +2271,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        name: 'Garrett',
+        email: 'garrettjcox@gmail.com',
+        password: 'password',
+        password_confirmation: 'password'
       }
     };
   },
@@ -53106,157 +53084,76 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return !_vm.$route.meta.hideNavbar
-    ? _c(
-        "div",
-        { staticClass: "navbar navbar-expand-md navbar-light shadow-sm" },
-        [
-          _c(
-            "div",
-            { staticClass: "container" },
-            [
-              _c(
-                "router-link",
-                { staticClass: "navbar-brand", attrs: { to: "/" } },
-                [_vm._v("\n            Vue\n        ")]
-              ),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "collapse navbar-collapse",
-                  attrs: { id: "navbarSupportedContent" }
-                },
-                [
-                  _vm.isAuth
-                    ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                        _c(
-                          "li",
-                          { staticClass: "nav-item" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "nav-link",
-                                attrs: { to: "/home" }
-                              },
-                              [_vm._v("Home")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "nav-item dropdown" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-link dropdown-toggle",
-                              attrs: {
-                                id: "navbarDropdown",
-                                href: "#",
-                                role: "button",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false"
-                              }
-                            },
-                            [
-                              _c("span", [
-                                _vm._v(_vm._s(_vm.user && _vm.user.name))
-                              ]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "caret" })
-                            ]
-                          ),
+    ? _c("div", { staticClass: "navbar navbar-expand-md navbar-light" }, [
+        _c(
+          "div",
+          { staticClass: "container" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "navbar-brand", attrs: { to: "/" } },
+              [_vm._v("\n            Vue\n        ")]
+            ),
+            _vm._v(" "),
+            _c("b-navbar-toggle", { attrs: { target: "nav-collapse" } }),
+            _vm._v(" "),
+            _c("b-collapse", { attrs: { id: "nav-collapse", "is-nav": "" } }, [
+              _vm.isAuth
+                ? _c(
+                    "div",
+                    { staticClass: "navbar-nav ml-auto" },
+                    [
+                      _c(
+                        "b-nav-item-dropdown",
+                        { attrs: { right: "" } },
+                        [
+                          _c("template", { slot: "button-content" }, [
+                            _vm._v(_vm._s(_vm.user && _vm.user.name))
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dropdown-menu dropdown-menu-right",
-                              attrs: { "aria-labelledby": "navbarDropdown" }
-                            },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "dropdown-item",
-                                  on: { click: _vm.logout }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Logout\n                        "
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ])
-                      ])
-                    : _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                        _c(
-                          "li",
-                          { staticClass: "nav-item" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "nav-link",
-                                attrs: { to: "/login" }
-                              },
-                              [_vm._v("Login")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          { staticClass: "nav-item" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "nav-link",
-                                attrs: { to: "/register" }
-                              },
-                              [_vm._v("Register")]
-                            )
-                          ],
-                          1
-                        )
-                      ])
-                ]
-              )
-            ],
-            1
-          )
-        ]
-      )
+                          _c("b-dropdown-item", [_vm._v("Profile")]),
+                          _vm._v(" "),
+                          _c("b-dropdown-item", { on: { click: _vm.logout } }, [
+                            _vm._v("Sign Out")
+                          ])
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  )
+                : _c(
+                    "div",
+                    { staticClass: "navbar-nav ml-auto" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-item nav-link",
+                          attrs: { to: "/login" }
+                        },
+                        [_vm._v("Log In")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-item nav-link",
+                          attrs: { to: "/register" }
+                        },
+                        [_vm._v("Sign Up")]
+                      )
+                    ],
+                    1
+                  )
+            ])
+          ],
+          1
+        )
+      ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "navbar-toggler",
-        attrs: {
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": "#navbarSupportedContent",
-          "aria-controls": "navbarSupportedContent",
-          "aria-expanded": "false",
-          "aria-label": "Toggle navigation"
-        }
-      },
-      [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -72826,7 +72723,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__["STATE_FAIL"]);
-                commit('setErrors', _context.t0.response.data.errors);
+                commit('setError', _context.t0.response.data);
 
               case 16:
               case "end":
@@ -73083,7 +72980,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 12;
                 _context.t0 = _context["catch"](3);
                 commit('setRequestState', _constants_requestStates__WEBPACK_IMPORTED_MODULE_4__["STATE_FAIL"]);
-                commit('setErrors', _context.t0.response.data.errors);
+                commit('setError', _context.t0.response.data);
                 commit('auth/clearUser', null, {
                   root: true
                 });
