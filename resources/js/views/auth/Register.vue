@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block" :disabled="$v.$invalid || inProgress">
+                    <button type="submit" class="btn btn-lg btn-success btn-block" :disabled="$v.$invalid || inProgress">
                         <div class="spinner-grow spinner-grow-sm text-light" role="status" v-if="inProgress">
                             <span class="sr-only">Loading...</span>
                         </div>

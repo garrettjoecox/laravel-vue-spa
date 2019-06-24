@@ -53902,7 +53902,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-lg btn-primary btn-block",
+                  staticClass: "btn btn-lg btn-success btn-block",
                   attrs: {
                     type: "submit",
                     disabled: _vm.$v.$invalid || _vm.inProgress
@@ -72644,52 +72644,6 @@ function () {
 
 /***/ }),
 
-/***/ "./resources/js/store/alert.js":
-/*!*************************************!*\
-  !*** ./resources/js/store/alert.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var nextAlertId = 1;
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: {
-    alerts: []
-  },
-  mutations: {
-    addAlert: function addAlert(state, alert) {
-      alert.id = nextAlertId;
-      nextAlertId += 1;
-      state.alerts.push(alert);
-    },
-    removeAlert: function removeAlert(state, alertId) {
-      var index = state.alerts.findIndex(function (alert) {
-        return alert.id === alertId;
-      });
-      if (index !== -1) state.alerts.splice(index, 1);
-    },
-    clearAlerts: function clearAlerts(state) {
-      state.alerts = [];
-    }
-  },
-  actions: {
-    addTimedAlert: function addTimedAlert(_ref, alert) {
-      var commit = _ref.commit;
-      alert.id = nextAlertId;
-      nextAlertId += 1;
-      commit('addAlert', alert);
-      setTimeout(function () {
-        commit('removeAlert', alert.id);
-      }, 5000);
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/store/auth/index.js":
 /*!******************************************!*\
   !*** ./resources/js/store/auth/index.js ***!
@@ -73326,16 +73280,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth/index.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/store/alert.js");
-
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
-    alert: _alert__WEBPACK_IMPORTED_MODULE_3__["default"]
+    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   strict: true
 }));
