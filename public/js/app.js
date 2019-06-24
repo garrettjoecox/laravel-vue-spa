@@ -53222,45 +53222,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-5" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card border-danger" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body text-danger" },
-            [
-              _c("p", { staticClass: "card-text" }, [
-                _vm._v(
-                  "We're sorry, but that page does not exist. If you believe this is an error please contact support."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                { staticClass: "btn btn-secondary", attrs: { to: "/" } },
-                [_vm._v("Return to safety")]
-              )
-            ],
-            1
-          )
-        ])
+  return _c(
+    "div",
+    {
+      staticClass:
+        "flex-fill d-flex align-items-center justify-content-center pb-5"
+    },
+    [
+      _c("div", { staticClass: "pb-5" }, [
+        _c("h1", { staticClass: "text-center display-2" }, [_vm._v("404")]),
+        _vm._v(" "),
+        _c(
+          "h5",
+          { staticClass: "mb-5 text-center text-muted" },
+          [
+            _c("router-link", { staticClass: "btn-link", attrs: { to: "/" } }, [
+              _vm._v("Return to safety")
+            ])
+          ],
+          1
+        )
       ])
-    ])
-  ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "mb-0" }, [_vm._v("404")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
