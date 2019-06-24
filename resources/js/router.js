@@ -7,6 +7,7 @@ import Welcome from './views/Welcome.vue';
 import Home from './views/Home.vue';
 import Register from './views/auth/Register.vue';
 import Login from './views/auth/Login.vue';
+import Verify from './views/auth/Verify.vue';
 import PasswordEmail from './views/auth/passwords/Email.vue';
 import PasswordReset from './views/auth/passwords/Reset.vue';
 
@@ -32,7 +33,8 @@ const router = new VueRouter({
             path: '/home',
             component: Home,
             meta: {
-                requiresAuth: true,
+                auth: true,
+                verified: true,
             },
         },
 
@@ -41,7 +43,7 @@ const router = new VueRouter({
             component: Register,
             meta: {
                 hideNavbar: true,
-                guest: true,
+                notAuth: true,
             },
         },
 
@@ -50,7 +52,16 @@ const router = new VueRouter({
             component: Login,
             meta: {
                 hideNavbar: true,
-                guest: true,
+                notAuth: true,
+            },
+        },
+
+        {
+            path: '/email/resend',
+            component: Verify,
+            meta: {
+                auth: true,
+                notVerified: true,
             },
         },
 
@@ -58,7 +69,7 @@ const router = new VueRouter({
             path: '/password/email',
             component: PasswordEmail,
             meta: {
-                guest: true,
+                notAuth: true,
             },
         },
 
@@ -66,7 +77,7 @@ const router = new VueRouter({
             path: '/password/reset/:token',
             component: PasswordReset,
             meta: {
-                guest: true,
+                notAuth: true,
             },
         },
     ],
@@ -77,24 +88,30 @@ router.beforeEach(async (to, from, next) => {
         await store.dispatch('auth/refreshUser/sendRequest');
     }
 
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.matched.some(record => record.meta.auth)) {
         if (!store.state.auth.isAuth) {
-            next({
+            return next({
                 path: '/login',
                 query: { redirect: to.fullPath },
             });
-        } else {
-            next();
         }
-    } else if (to.matched.some(record => record.meta.guest)) {
+    } else if (to.matched.some(record => record.meta.notAuth)) {
         if (store.state.auth.isAuth) {
-            next({ path: '/home' });
-        } else {
-            next();
+            return next({ path: '/home' });
         }
-    } else {
-        next();
     }
+
+    if (to.matched.some(record => record.meta.notVerified)) {
+        if (store.state.auth.user.email_verified_at) {
+            return next({ path: '/' });
+        }
+    } else if (to.matched.some(record => record.meta.verified)) {
+        if (!store.state.auth.user.email_verified_at) {
+            return next({ path: '/email/resend' });
+        }
+    }
+
+    return next();
 });
 
 export default router;

@@ -9,6 +9,7 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <div class="navbar-nav ml-auto" v-if="isAuth">
+                    <router-link class="nav-item nav-link" to="/home">Home</router-link>
                     <b-nav-item-dropdown right>
                         <template slot="button-content">{{ user && user.name }}</template>
                         <b-dropdown-item>Profile</b-dropdown-item>
@@ -45,9 +46,13 @@ export default {
             await this.$store.dispatch('auth/logout/sendRequest');
 
             if (this.requestState === STATE_SUCCESS) {
-                this.$store.dispatch('alert/addTimedAlert', {
-                    type: 'primary',
-                    message: 'Logged out successfully',
+                this.$bvToast.toast('Logged out successfully', {
+                    title: 'Success',
+                    toaster: 'b-toaster-bottom-right',
+                    variant: 'primary',
+                    autoHideDelay: 5000,
+                    solid: true,
+                    appendToast: true,
                 });
                 this.$router.push('/login');
             }

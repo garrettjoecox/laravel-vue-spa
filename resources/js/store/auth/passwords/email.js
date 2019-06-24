@@ -17,8 +17,8 @@ export default defaultsDeep({
                 commit('setData', response.data);
             } catch (error) {
                 commit('setRequestState', STATE_FAIL);
-                commit('setErrors', error.response.data.errors);
+                commit('setError', error.response.data);
             }
         },
-    }
+    },
 }, baseRequestStore);

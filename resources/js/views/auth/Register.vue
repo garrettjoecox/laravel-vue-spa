@@ -197,6 +197,15 @@ export default {
             await this.$store.dispatch('auth/register/sendRequest', this.form);
 
             if (this.requestState === STATE_SUCCESS) {
+                this.$bvToast.toast('Successfully created account', {
+                    title: 'Success',
+                    toaster: 'b-toaster-bottom-right',
+                    variant: 'success',
+                    autoHideDelay: 5000,
+                    solid: true,
+                    appendToast: true,
+                });
+
                 this.$router.push(this.$route.query.redirect || '/home');
             }
         }
